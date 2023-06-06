@@ -12,7 +12,7 @@ class Packet:
         self._get_blocks_and_selectors()
         self._parse_fields()
         self._structure: dict[Selector, np.dtype] = {
-            selector: np.dtype(list((field.name, field.dtype) for field in structure))
+            selector: np.dtype([(field.name, field.dtype) for field in structure])
             for selector, structure in self._fields.items()}
         self._decoder: dict[Selector, dict[str, ValueConvertFunc]] = {
             selector: {field.name: field.get_value for field in fields}
@@ -43,19 +43,26 @@ class Packet:
         self._fields: dict[Selector, tuple[Field, ...]] = {
             selector: tuple(make_struct(selector))
             for selector in itertools.product(*(block.structure for block in self._blocks))}
+        self._append_default()
 
-    def _get_selector(self, buffer: bytes):
+    def _append_default(self):
+        self._fields[None] = tuple(field if isinstance(field, Field) else field.default
+                                   for field in self._raw_structure)
+
+    def _get_selector(self, buffer: bytes) -> Selector:
         return tuple(buffer[s] for s in self._selectors)
 
-    def decode(self, buffer: bytes):
+    def decode(self, buffer: bytes) -> tuple[np.array, Selector]:
         selector = self._get_selector(buffer)
+        if selector not in self._structure:
+            selector = None
         return np.frombuffer(buffer, dtype=self._structure[selector]), selector
 
-    def get(self, obj, name: str, selector: Selector):
+    def get(self, obj: np.array, name: str, selector: Selector):
         return self._decoder[selector][name](obj[name][0])
 
-    def translate(self, obj, selector: Selector):
+    def translate(self, obj: np.array, selector: Selector) -> dict[str, ...]:
         return {field.name: self.get(obj, field.name, selector) for field in self._fields[selector]}
 
-    def parse(self, buffer: bytes):
+    def parse(self, buffer: bytes) -> dict[str, ...]:
         return self.translate(*self.decode(buffer))

@@ -59,10 +59,18 @@ class Field:
 class VariableBlock:
     selector: int
     structure: dict[int, list[Field]]
+    size: InitVar[int]
     name: str | None = None
 
+    def __post_init__(self, size: int):
+        field_name = self.name if self.name is not None else f'field_{hex(id(self))}'
+        self.default = Field(field_name, RTType(
+            np.dtype([(f'b{i}', np.uint8) for i in range(size)]),
+            get_value=lambda _: 'Parser_not_implemented',
+        ))
 
-Selector: TypeAlias = tuple[int, ...]
+
+Selector: TypeAlias = tuple[int, ...] | None
 Structure: TypeAlias = list[Field | VariableBlock]
 
 Byte = RTType(np.int8)
