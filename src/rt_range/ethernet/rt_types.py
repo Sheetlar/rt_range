@@ -79,7 +79,7 @@ Short = RTType(np.int16)
 UShort = RTType(np.uint16)
 Word = RTType(
     np.dtype([('b0', np.uint8), ('b1', np.uint8), ('b2', np.uint8)]),
-    get_value=lambda v: x if (x := np.frombuffer(bytes(v) + b'\0', dtype=np.int32)[0]) < 0x800000 else -(~x & 0x00FFFFFF),
+    get_value=lambda v: x if (x := np.frombuffer(bytes(v) + b'\0', dtype=np.int32)[0]) < 0x800000 else -(~x & 0x00FFFFFF) - 1,
 )
 UWord = RTType(
     np.dtype([('b0', np.uint8), ('b1', np.uint8), ('b2', np.uint8)]),
