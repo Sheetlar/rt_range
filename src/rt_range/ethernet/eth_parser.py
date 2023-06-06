@@ -1,6 +1,7 @@
 from enum import Enum
 
-from rt_range.ethernet.ncom.ncom import NCOM
+from rt_range.ethernet.ncom import NCOM
+from rt_range.ethernet.rcom import RCOM_lane
 from rt_range.ethernet.rt_packet import Packet
 
 
@@ -17,6 +18,7 @@ class PacketType(Enum):
 class EthernetParser:
     _parsers: dict[PacketType, Packet] = {
         PacketType.NCOM: NCOM,
+        PacketType.RCOM_lane: RCOM_lane,
     }
 
     @classmethod

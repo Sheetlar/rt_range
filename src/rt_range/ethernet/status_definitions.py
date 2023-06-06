@@ -7,7 +7,7 @@ def decode_enum(enum_dict: dict):
     return decode
 
 
-nav_status = {
+ncom_nav_status = {
     KeyError: 'Value_not_in_documentation',
     0: 'Invalid',
     1: 'Raw_IMU_measurements',
@@ -18,7 +18,7 @@ nav_status = {
     6: 'Expired_firmware',
     7: 'Blocked_firmware',
 }
-channel_status = {
+ncom_channel_status = {
     KeyError: 'Reserved_for_future_use',
     0: 'Time_satellites_mode',
     1: 'Kalman_filter_innovations_1',
@@ -56,4 +56,16 @@ channel_status = {
     33: 'Zero_velocity_lever_arm',
     34: 'Zero_velocity_lever_arm_accuracy',
     # TODO: Status descriptions
+}
+rcom_lane_status_channel = {
+    KeyError: 'Value_not_in_documentation',
+    0: 'GPS_coarse_time',
+    1: 'RT-Range_SW_dev_ID',
+    2: 'Map_number',
+    6: 'OS_and_script_version',
+    7: 'UTC_offset_CPU_load',
+    8: 'Point_A_lever-arm',
+    9: 'Point_B_lever-arm',
+    10: 'Point_C_lever-arm',
+    15: 'Command_communication_status',
 }

@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from rt_range.ethernet.eth_parser import EthernetParser, PacketType
-from rt_range.ethernet.ncom.ncom import NCOM
+from rt_range.ethernet.ncom import NCOM
 from rt_range.ethernet.rt_packet import Packet
 
 
