@@ -21,6 +21,10 @@ def convert_10_pow_m6(value: int):
     return value / 1000000
 
 
+def convert_10_pow_m7(value: int):
+    return value / 10000000
+
+
 def flatten(iterable: Iterable):
     for item in iterable:
         if isinstance(item, Iterable) and not isinstance(item, (str, bytes)):
