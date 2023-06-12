@@ -18,7 +18,7 @@ class TestNCOM(TestCase):
             0xe7, 0, 5.0, 0.2, -9.8102, 0, 0, 0,
             'Locked', 0, 0.0, 0.0, 0.0,
             3.14, 2.78, 0.0001, 0.001234, 0.000123, 0.000321, 0, 'Time_satellites_mode',
-            0, 15, 6, 6, 6, 0,
+            0, 15, 'RTK_Integer', 'RTK_Integer', 'RTK_Integer', 0,
         )
         parsed_data = EthernetParser.parse_rt_ethernet(sample_packet, PacketType.NCOM)
         for expected_value, parsed_value in zip(expected_values, parsed_data.values()):
