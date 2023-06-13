@@ -1,5 +1,8 @@
 # Default ignored files
+__pycache__/
 /shelf/
 /.idea/
 /venv/
+/dist/
+*.egg-info/
 /data/
