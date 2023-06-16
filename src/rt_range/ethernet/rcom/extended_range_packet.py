@@ -2,8 +2,8 @@ import itertools
 
 from rt_range.common import convert_10_pow_m2, convert_10_pow_m3, convert_10_pow_m7
 from rt_range.ethernet.rt_packet import Packet
-from rt_range.ethernet.rt_types import Field, VariableBlock, UByte, Short, UShort, Word, Long, ULong
-from rt_range.ethernet.status_definitions import decode_enum, rcom_ex_range_status_channel
+from rt_range.ethernet.rt_types import Field, VariableBlock, Byte, UByte, Short, UShort, Word, UWord, Long, ULong, Float
+from rt_range.ethernet.status_definitions import decode_enum, rcom_ex_range_status_channel, ncom_position_velocity_orientation_mode
 
 
 def multiple_sensor_points():
@@ -17,16 +17,75 @@ def multiple_sensor_points():
     )
 
 
-rcom_ex_range_status = {  # TODO: Status description
+rcom_ex_range_status = {
+    0: [
+        Field('GPS_time', Long, unit='min'),
+        Field('hunter_position_mode', UByte, decode_value=decode_enum(ncom_position_velocity_orientation_mode)),
+        Field('target_position_mode', UByte, decode_value=decode_enum(ncom_position_velocity_orientation_mode)),
+        Field('target_latency', UShort, decode_value=convert_10_pow_m3, unit='s'),
+    ],
+    1: [
+        Field('ID_byte_0', Byte),
+        Field('ID_byte_1', Byte),
+        Field('ID_byte_2', Byte),
+        Field('ID_byte_3', Byte),
+        Field('ID_byte_4', Byte),
+        Field('ID_byte_5', Byte),
+        Field('ID_byte_6', Byte),
+        Field('ID_byte_7', Byte),
+    ],
+    2: [
+        Field('target_radio_characters_received', UShort),
+        Field('target_radio_packets_received', UShort),
+        Field('target_radio_characters_skipped', UShort),
+        Field('reserved', UShort),
+    ],
+    3: [
+        Field('target_WLAN_characters_received', UShort),
+        Field('target_WLAN_packets_received', UShort),
+        Field('target_WLAN_characters_skipped', UShort),
+        Field('reserved', UShort),
+    ],
+    4: [
+        Field('hunter_ethernet_characters_received', UShort),
+        Field('hunter_ethernet_packets_received', UShort),
+        Field('hunter_ethernet_characters_skipped', UShort),
+        Field('reserved', UShort),
+    ],
     5: [
         Field('hunter_output_latency', UShort, decode_value=convert_10_pow_m3, unit='s'),
         Field('range_longitudinal_offset', Short, decode_value=convert_10_pow_m3, unit='m'),
         Field('range_lateral_offset', Short, decode_value=convert_10_pow_m3, unit='m'),
         Field('reserved', UShort),
     ],
+    6: [
+        Field('major_OS_version', UByte),
+        Field('minor_OS_version', UByte),
+        Field('OS_revision_version', UByte),
+        Field('script_version', UWord),
+        Field('reserved', UShort),
+    ],
+    7: [
+        Field('UTC_offset', Short, unit='s'),
+        Field('range_reference_plane_configuration', UByte),
+        Field('target_feature_set_number', UByte),
+        Field('number_feature_points_feature_set', UShort),
+        Field('maximum_feature_points_per_feature_cell', UByte),
+        Field('CPU_load', UByte, decode_value=lambda v: v * 0.4, unit='%'),
+    ],
     8: [
         Field('fixed_point_latitude', Long, decode_value=convert_10_pow_m7, unit='deg'),
         Field('fixed_point_longitude', Long, decode_value=convert_10_pow_m7, unit='deg'),
+    ],
+    9: [
+        Field('hunter_ip_byte_1', Byte),
+        Field('hunter_ip_byte_2', Byte),
+        Field('hunter_ip_byte_3', Byte),
+        Field('hunter_ip_byte_4', Byte),
+        Field('target_ip_byte_1', Byte),
+        Field('target_ip_byte_2', Byte),
+        Field('target_ip_byte_3', Byte),
+        Field('target_ip_byte_4', Byte),
     ],
     10: [
         Field('fixed_point_altitude', Long, decode_value=convert_10_pow_m3, unit='m'),
@@ -50,6 +109,12 @@ rcom_ex_range_status = {  # TODO: Status description
         Field('target_lever_arm_y', Word, decode_value=convert_10_pow_m3, unit='m'),
         Field('target_lever_arm_z', Short, decode_value=convert_10_pow_m3, unit='m'),
     ],
+    15: [
+        Field('UDP_command_characters_received', UShort),
+        Field('UDP_command_packets_received', UShort),
+        Field('UDP_command_characters_skipped', UShort),
+        Field('UDP_command_errors', UShort),
+    ],
     16: [
         Field('range_longitudinal_accuracy', UShort, decode_value=convert_10_pow_m3, unit='m'),
         Field('range_lateral_accuracy', UShort, decode_value=convert_10_pow_m3, unit='m'),
@@ -61,6 +126,14 @@ rcom_ex_range_status = {  # TODO: Status description
         Field('target_vehicle_width', UShort, decode_value=convert_10_pow_m3, unit='m'),
         Field('target_polygon_number', UShort),
         Field('target_vehicle_height', UShort, decode_value=convert_10_pow_m3, unit='m'),
+    ],
+    18: [
+        Field('acceleration_filter_cut_off_frequency', Float, unit='Hz'),
+        Field('acceleration_filter_damping_ratio', Float),
+    ],
+    19: [
+        Field('extrapolation_filter_cut_off_frequency', Float, unit='Hz'),
+        Field('extrapolation_filter_damping_ratio', Float),
     ],
     20: [
         Field('feature_point_latitude', Long, decode_value=convert_10_pow_m7, unit='deg'),
