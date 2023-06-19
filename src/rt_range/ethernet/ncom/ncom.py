@@ -1,4 +1,4 @@
-from rt_range.common import convert_10_pow_m4, convert_10_pow_m5, convert_10_pow_m6
+from rt_range.common import convert_10_pow_m3, convert_10_pow_m4, convert_10_pow_m5, convert_10_pow_m6
 from rt_range.ethernet.ncom.batch_s import BatchS
 from rt_range.ethernet.rt_packet import Packet
 from rt_range.ethernet.rt_types import Field, UByte, UShort, Word, Float, Double, VariableBlock
@@ -6,7 +6,7 @@ from rt_range.ethernet.status_definitions import decode_enum, ncom_nav_status, n
 
 
 BatchA = [
-    Field('time', UShort),
+    Field('time', UShort, decode_value=convert_10_pow_m3, unit='s'),
     Field('acceleration_x', Word, decode_value=convert_10_pow_m4, unit='m/s^2'),
     Field('acceleration_y', Word, decode_value=convert_10_pow_m4, unit='m/s^2'),
     Field('acceleration_z', Word, decode_value=convert_10_pow_m4, unit='m/s^2'),

@@ -1,6 +1,10 @@
 from typing import Iterable
 
 
+def convert_10_pow_m1(value: int):
+    return value / 10
+
+
 def convert_10_pow_m2(value: int):
     return value / 100
 
@@ -23,6 +27,10 @@ def convert_10_pow_m6(value: int):
 
 def convert_10_pow_m7(value: int):
     return value / 10000000
+
+
+def validity_bit0(value: int):
+    return value & 0x7f
 
 
 def flatten(iterable: Iterable):

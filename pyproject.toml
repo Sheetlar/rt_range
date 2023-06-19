@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rt_range"
-version = "0.2.0"
+version = "0.3.0"
 description = "OxTS RT-Range data parsing utility"
 requires-python = ">=3.10"
 dependencies = [

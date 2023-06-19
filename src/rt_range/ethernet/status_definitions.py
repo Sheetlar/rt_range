@@ -49,7 +49,7 @@ ncom_channel_status = {
     21: 'Disk_space_log_size',
     22: 'Internal_info_processing_timing',
     23: 'Up_time_GNSS_rejections_PTP_status',
-    24: 'Async_packet_event_input_falling_edge',
+    24: 'Asynchronous_packet_event_input_falling_edge',
     25: 'Reserved',
     26: 'Displacement_lever_arm',
     27: 'Internal_info_dual_antenna_ambiguity',
@@ -167,6 +167,23 @@ ncom_blended_processing_methods = {
     4: 'Post_process_backward',
     5: 'Post_process_combined',
     6: 'Unknown',
+}
+ncom_ptp_status = {
+    KeyError: 'Value_not_in_documentation',
+    0: 'PTP_status_invalid',
+    1: 'PTP_status_initializing',
+    2: 'PTP_status_faulty',
+    3: 'PTP_status_disabled',
+    4: 'PTP_status_listening',
+    5: 'PTP_status_pre_master',
+    6: 'PTP_status_master',
+    7: 'PTP_status_passive',
+    8: 'PTP_status_uncalibrated',
+    9: 'PTP_status_slave',
+    10: 'PTP_status_locked',
+    11: 'PTP_status_config_error',
+    12: 'PTP_status_critical_error',
+    13: 'PTP_status_unknown',
 }
 rcom_lane_status_channel = {
     KeyError: 'Value_not_in_documentation',
