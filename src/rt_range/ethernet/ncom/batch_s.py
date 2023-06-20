@@ -164,7 +164,7 @@ BatchS = {  # TODO: Block definitions for other status_channel values
         Field('station_ID_byte_1', Byte),
         Field('station_ID_byte_2', Byte),
         Field('station_ID_byte_3', Byte),
-        Field('reserved', UByte),
+        Field('reserved', UShort),
     ],
     21: [
         Field('disk_space_remaining', Long, unit='kB'),
