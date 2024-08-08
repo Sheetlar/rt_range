@@ -56,7 +56,7 @@ class Packet:
         selector = self._get_selector(buffer)
         if selector not in self._structure:
             selector = None
-        return np.frombuffer(buffer, dtype=self._structure[selector]), selector
+        return np.frombuffer(buffer, dtype=self._structure[selector], count=1), selector
 
     def get(self, obj: np.array, name: str, selector: Selector):
         return self._decoder[selector][name](obj[name][0])
